@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * str_length - returns the length of a string.
  * @string: pointer to string.
@@ -7,15 +6,15 @@
  */
 int str_length(char *string)
 {
-	int length = 0;
+	int len = 0;
 
 	if (string == NULL)
 		return (0);
 
-	while (string[length++] != '\0')
+	while (string[len++] != '\0')
 	{
 	}
-	return (--length);
+	return (--len);
 }
 
 /**
@@ -26,14 +25,14 @@ int str_length(char *string)
 char *str_duplicate(char *string)
 {
 	char *result;
-	int length, i;
+	int len, x;
 
 	if (string == NULL)
 		return (NULL);
 
-	length = str_length(string) + 1;
+	len = str_length(string) + 1;
 
-	result = malloc(sizeof(char) * length);
+	result = malloc(sizeof(char) * len);
 
 	if (result == NULL)
 	{
@@ -41,9 +40,9 @@ char *str_duplicate(char *string)
 		perror("Error");
 		return (NULL);
 	}
-	for (i = 0; i < length ; i++)
+	for (x = 0; x < len ; x++)
 	{
-		result[i] = string[i];
+		result[x] = string[x];
 	}
 
 	return (result);
@@ -51,14 +50,14 @@ char *str_duplicate(char *string)
 
 /**
  * str_compare - Compare two strings
- * @string1: String one, or the shorter
- * @string2: String two, or the longer
+ * @string1: first String
+ * @string2: second String
  * @number: number of characters to be compared, 0 if infinite
- * Return: 1 if the strings are equals,0 if the strings are different
+ * Return: 1 if the strings are equals,0 otherwise
  */
 int str_compare(char *string1, char *string2, int number)
 {
-	int iterator;
+	int cursor;
 
 	if (string1 == NULL && string2 == NULL)
 		return (1);
@@ -70,18 +69,18 @@ int str_compare(char *string1, char *string2, int number)
 	{
 		if (str_length(string1) != str_length(string2))
 			return (0);
-		for (iterator = 0; string1[iterator]; iterator++)
+		for (cursor = 0; string1[cursor]; cursor++)
 		{
-			if (string1[iterator] != string2[iterator])
+			if (string1[cursor] != string2[cursor])
 				return (0);
 		}
 		return (1);
 	}
 	else /* if there is a number of chars to be compared */
 	{
-		for (iterator = 0; iterator < number ; iterator++)
+		for (cursor = 0; cursor < number ; cursor++)
 		{
-			if (string1[iterator] != string2[iterator])
+			if (string1[cursor] != string2[cursor])
 			return (0);
 		}
 		return (1);
@@ -90,25 +89,25 @@ int str_compare(char *string1, char *string2, int number)
 
 /**
  * str_concat - concatenates two strings.
- * @string1: String to be concatenated
- * @string2: String to be concatenated
+ * @string1: first String
+ * @string2: second String
  *
  * Return: pointer to the array
  */
 char *str_concat(char *string1, char *string2)
 {
 	char *result;
-	int length1 = 0, length2 = 0;
+	int len1 = 0, len2 = 0;
 
 	if (string1 == NULL)
 		string1 = "";
-	length1 = str_length(string1);
+	len1 = str_length(string1);
 
 	if (string2 == NULL)
 		string2 = "";
-	length2 = str_length(string2);
+	len2 = str_length(string2);
 
-	result = malloc(sizeof(char) * (length1 + length2 + 1));
+	result = malloc(sizeof(char) * (len1 + len2 + 1));
 	if (result == NULL)
 	{
 		errno = ENOMEM;
@@ -117,18 +116,18 @@ char *str_concat(char *string1, char *string2)
 	}
 
 	/* copy of string1 */
-	for (length1 = 0; string1[length1] != '\0'; length1++)
-		result[length1] = string1[length1];
+	for (len1 = 0; string1[len1] != '\0'; len1++)
+		result[len1] = string1[len1];
 	free(string1);
 
 	/* copy of string2 */
-	for (length2 = 0; string2[length2] != '\0'; length2++)
+	for (len2 = 0; string2[len2] != '\0'; len2++)
 	{
-		result[length1] = string2[length2];
-		length1++;
+		result[len1] = string2[len2];
+		len1++;
 	}
 
-	result[length1] = '\0';
+	result[len1] = '\0';
 	return (result);
 }
 
@@ -142,13 +141,13 @@ char *str_concat(char *string1, char *string2)
 void str_reverse(char *string)
 {
 
-	int i = 0, length = str_length(string) - 1;
-	char hold;
+	int x = 0, len = str_length(string) - 1;
+	char h;
 
-	while (i < length)
+	while (x < len)
 	{
-		hold = string[i];
-		string[i++] = string[length];
-		string[length--] = hold;
+		h = string[x];
+		string[x++] = string[len];
+		string[len--] = h;
 	}
 }

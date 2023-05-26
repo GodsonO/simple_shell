@@ -1,45 +1,44 @@
 #include "shell.h"
-
 /**
  * builtin_env - shows the environment where the shell runs
  * @data: struct for the program's data
- * Return: zero if sucess, or other number if its declared in the arguments
+ * Return: 0 on success, or otherwise
  */
 int builtin_env(data_of_program *data)
 {
-	int i;
-	char cpname[50] = {'\0'};
-	char *var_copy = NULL;
+	int x;
+	char name_cp[50] = {'\0'};
+	char *varcopy = NULL;
 
 	/* if not arguments */
 	if (data->tokens[1] == NULL)
 		print_environ(data);
 	else
 	{
-		for (i = 0; data->tokens[1][i]; i++)
+		for (x = 0; data->tokens[1][x]; x++)
 		{/* checks if exists a char = */
-			if (data->tokens[1][i] == '=')
+			if (data->tokens[1][x] == '=')
 			{/* checks if exists a var with the same name and change its value*/
 			/* temporally */
-				var_copy = str_duplicate(env_get_key(cpname, data));
-				if (var_copy != NULL)
-					env_set_key(cpname, data->tokens[1] + i + 1, data);
+				varcopy = str_duplicate(env_get_key(name_cp, data));
+				if (varcopy != NULL)
+					env_set_key(name_cp, data->tokens[1] + x + 1, data);
 
 				/* print the environ */
 				print_environ(data);
-				if (env_get_key(cpname, data) == NULL)
+				if (env_get_key(name_cp, data) == NULL)
 				{/* print the variable if it does not exist in the environ */
 					_print(data->tokens[1]);
 					_print("\n");
 				}
 				else
 				{/* returns the old value of the var*/
-					env_set_key(cpname, var_copy, data);
-					free(var_copy);
+					env_set_key(name_cp, varcopy, data);
+					free(varcopy);
 				}
 				return (0);
 			}
-			cpname[i] = data->tokens[1][i];
+			name_cp[x] = data->tokens[1][x];
 		}
 		errno = 2;
 		perror(data->command_name);
@@ -49,9 +48,9 @@ int builtin_env(data_of_program *data)
 }
 
 /**
- * builtin_set_env - ..
+ * builtin_set_env - set env
  * @data: struct for the program's data
- * Return: zero if sucess, or other number if its declared in the arguments
+ * Return: 0 on success, or otherwise
  */
 int builtin_set_env(data_of_program *data)
 {
@@ -71,9 +70,9 @@ int builtin_set_env(data_of_program *data)
 }
 
 /**
- * builtin_unset_env - ..
+ * builtin_unset_env - unset env
  * @data: struct for the program's data'
- * Return: ..
+ * Return: 0
  */
 int builtin_unset_env(data_of_program *data)
 {

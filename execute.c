@@ -1,24 +1,24 @@
 #include "shell.h"
 /**
- * execute - execute a command with its entire path variables.
+ * execute - execute a command using its entire path variables.
  * @data: a pointer to the program's data
- * Return: If sucess returns zero, otherwise, return -1.
+ * Return: 0 on success, otherwise.
  */
 int execute(data_of_program *data)
 {
-	int retval = 0, status;
+	int r_val = 0, stat;
 	pid_t pidd;
 
 	/* check for program in built ins */
-	retval = builtins_list(data);
-	if (retval != -1)/* if program was found in built ins */
-		return (retval);
+	r_val = builtins_list(data);
+	if (r_val != -1)/* if program was found in built ins */
+		return (r_val);
 
 	/* check for program file system */
-	retval = find_program(data);
-	if (retval)
+	r_val = find_program(data);
+	if (r_val)
 	{/* if program not found */
-		return (retval);
+		return (r_val);
 	}
 	else
 	{/* if program was found */
@@ -30,17 +30,17 @@ int execute(data_of_program *data)
 		}
 		if (pidd == 0)
 		{/* I am the child process, I execute the program*/
-			retval = execve(data->tokens[0], data->tokens, data->env);
-			if (retval == -1) /* if error when execve*/
+			r_val = execve(data->tokens[0], data->tokens, data->env);
+			if (r_val == -1) /* if error when execve*/
 				perror(data->command_name), exit(EXIT_FAILURE);
 		}
 		else
 		{/* I am the father, I wait and check the exit status of the child */
-			wait(&status);
-			if (WIFEXITED(status))
-				errno = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				errno = 128 + WTERMSIG(status);
+			wait(&stat);
+			if (WIFEXITED(stat))
+				errno = WEXITSTATUS(stat);
+			else if (WIFSIGNALED(stat))
+				errno = 128 + WTERMSIG(stat);
 		}
 	}
 	return (0);
