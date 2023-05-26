@@ -343,16 +343,14 @@ $
 
 ## Authors © ##
 
-👤 **ELIJAH BAYERE OLAIYA**
+👤 **OMOGHENE OMOGHENE**
 
-- GitHub: [@olittobee](https://github.com/olittobee)
-- Twitter: [@olittobee4u](https://twitter.com/olittobee4u)
-- LinkedIn: [@Elijah](https://www.linkedin.com/in/elijah-bayere-olaiya-2b0727144)
+- GitHub: [@GodsonO](https://github.com/GodsonO)
+- Twitter: [@OmogheneGodson](https://twitter.com/OmogheneGodson)
+- LinkedIn: [@Godson](https://www.linkedin.com/in/godson-omoghene)
 
 
-👤 **OMOWALE OKETOYINBO**
+👤 **MIDE BABALOLA**
 
-- GitHub: [@Realomooke2](https://github.com/Realomooke2)
-- LinkedIn: [@Realomooke](https://www.linkedin.com/in/omowale-2058b8163)
-- Twitter: [@Realomooke](https://twitter.com/realOmoOke?s=09)
+- GitHub: [@Mide0David](https://github.com/Mide0David)
 
