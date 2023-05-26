@@ -1,73 +1,73 @@
 #include "shell.h"
-
 /**
  * env_get_key - gets the value of an environment variable
- * @key: the environment variable of interest
+ * @key: the environment variable
  * @data: struct of the program's data
  * Return: a pointer to the value of the variable or NULL if it doesn't exist
  */
 char *env_get_key(char *key, data_of_program *data)
 {
-	int i, key_length = 0;
+	int x, key_len = 0;
 
 	/* validate the arguments */
 	if (key == NULL || data->env == NULL)
 		return (NULL);
 
 	/* obtains the leng of the variable requested */
-	key_length = str_length(key);
+	key_len = str_length(key);
 
-	for (i = 0; data->env[i]; i++)
-	{/* Iterates through the environ and check for coincidence of the vame */
-		if (str_compare(key, data->env[i], key_length) &&
-		 data->env[i][key_length] == '=')
+	for (x = 0; data->env[x]; x++)
+	{/* moves through the environ and check for coincidence of the vame */
+		if (str_compare(key, data->env[x], key_len) &&
+		 data->env[x][key_len] == '=')
 		{/* returns the value of the key NAME=  when find it*/
-			return (data->env[i] + key_length + 1);
+			return (data->env[x] + key_len + 1);
 		}
 	}
-	/* returns NULL if did not find it */
+	/* returns NULL if it did not find it */
 	return (NULL);
 }
 
 /**
- * env_set_key - overwrite the value of the environment variable
- * or create it if does not exist.
- * @key: name of the variable to set
- * @value: new value
+ * env_set_key - overwrite the value of the
+ * environment variable or create it
+ * @key: name of the variable
+ * @value: pointer char
  * @data: struct of the program's data
- * Return: 1 if the parameters are NULL, 2 if there is an erroror 0 if sucess.
+ * Return: 0 on success or 1 if the parameters are NULL
+ * 2 if failure
  */
 
 int env_set_key(char *key, char *value, data_of_program *data)
 {
-	int i, key_length = 0, is_new_key = 1;
+	int x, key_len = 0, new_key = 1;
 
 	/* validate the arguments */
 	if (key == NULL || value == NULL || data->env == NULL)
 		return (1);
 
 	/* obtains the leng of the variable requested */
-	key_length = str_length(key);
+	key_len = str_length(key);
 
-	for (i = 0; data->env[i]; i++)
-	{/* Iterates through the environ and check for coincidence of the vame */
-		if (str_compare(key, data->env[i], key_length) &&
-		 data->env[i][key_length] == '=')
+	for (x = 0; data->env[x]; x++)
+	{/* moves through the environ and check for coincidence of the vame */
+		if (str_compare(key, data->env[x], key_len) &&
+		 data->env[x][key_len] == '=')
 		{/* If key already exists */
-			is_new_key = 0;
+			new_key = 0;
 			/* free the entire variable, it is new created below */
-			free(data->env[i]);
+			free(data->env[x]);
 			break;
 		}
 	}
 	/* make an string of the form key=value */
-	data->env[i] = str_concat(str_duplicate(key), "=");
-	data->env[i] = str_concat(data->env[i], value);
+	data->env[x] = str_concat(str_duplicate(key), "=");
+	data->env[x] = str_concat(data->env[x], value);
 
-	if (is_new_key)
+	if (new_key)
 	{/* if the variable is new, it is create at end of actual list and we need*/
 	/* to put the NULL value in the next position */
-		data->env[i + 1] = NULL;
+		data->env[x + 1] = NULL;
 	}
 	return (0);
 }
@@ -76,34 +76,34 @@ int env_set_key(char *key, char *value, data_of_program *data)
  * env_remove_key - remove a key from the environment
  * @key: the key to remove
  * @data: the sructure of the program's data
- * Return: 1 if the key was removed, 0 if the key does not exist;
+ * Return: 0 on success or 1 if the key was removed
  */
 int env_remove_key(char *key, data_of_program *data)
 {
-	int i, key_length = 0;
+	int x, key_len = 0;
 
 	/* validate the arguments */
 	if (key == NULL || data->env == NULL)
 		return (0);
 
-	/* obtains the leng of the variable requested */
-	key_length = str_length(key);
+	/* collects the length of the variable */
+	key_len = str_length(key);
 
-	for (i = 0; data->env[i]; i++)
+	for (x = 0; data->env[x]; x++)
 	{/* iterates through the environ and checks for coincidences */
-		if (str_compare(key, data->env[i], key_length) &&
-		 data->env[i][key_length] == '=')
+		if (str_compare(key, data->env[x], key_len) &&
+		 data->env[x][key_len] == '=')
 		{/* if key already exists, remove them */
-			free(data->env[i]);
+			free(data->env[x]);
 
 			/* move the others keys one position down */
-			i++;
-			for (; data->env[i]; i++)
+			x++;
+			for (; data->env[x]; x++)
 			{
-				data->env[i - 1] = data->env[i];
+				data->env[x - 1] = data->env[x];
 			}
 			/* put the NULL value at the new end of the list */
-			data->env[i - 1] = NULL;
+			data->env[x - 1] = NULL;
 			return (1);
 		}
 	}
@@ -114,15 +114,15 @@ int env_remove_key(char *key, data_of_program *data)
 /**
  * print_environ - prints the current environ
  * @data: struct for the program's data
- * Return: nothing
+ * Return: void
  */
 void print_environ(data_of_program *data)
 {
-	int j;
+	int y;
 
-	for (j = 0; data->env[j]; j++)
+	for (y = 0; data->env[y]; y++)
 	{
-		_print(data->env[j]);
+		_print(data->env[y]);
 		_print("\n");
 	}
 }

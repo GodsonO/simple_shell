@@ -1,10 +1,10 @@
 #include "shell.h"
 /**
- * main - initialize the variables of the program
- * @argc: number of values received from the command line
+ * main - implements a unix cmd interpreter
+ * @argc: num of values received from the command line
  * @argv: values received from the command line
- * @env: number of values received from the command line
- * Return: zero on succes.
+ * @env: num of values received from the command line
+ * Return: 0
  */
 int main(int argc, char *argv[], char *env[])
 {
@@ -16,8 +16,8 @@ int main(int argc, char *argv[], char *env[])
 	signal(SIGINT, handle_ctrl_c);
 
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO) && argc == 1)
-	{/* We are in the terminal, interactive mode */
-		errno = 2;/*???????*/
+	{/* interactive mode */
+		errno = 2;
 		prompt = PROMPT_MSG;
 	}
 	errno = 0;
@@ -27,8 +27,7 @@ int main(int argc, char *argv[], char *env[])
 
 /**
  * handle_ctrl_c - print the prompt in a new line
- * when the signal SIGINT (ctrl + c) is send to the program
- * @UNUSED: option of the prototype
+ * @UNUSED: an integer
  */
 void handle_ctrl_c(int opr UNUSED)
 {
@@ -37,15 +36,15 @@ void handle_ctrl_c(int opr UNUSED)
 }
 
 /**
- * inicialize_data - inicialize the struct with the info of the program
+ * inicialize_data - initialize the struct with the info
  * @data: pointer to the structure of data
- * @argv: array of arguments pased to the program execution
+ * @argv: array of arguments
  * @env: environ pased to the program execution
- * @argc: number of values received from the command line
+ * @argc: num of val received from d command line
  */
 void inicialize_data(data_of_program *data, int argc, char *argv[], char **env)
 {
-	int i = 0;
+	int x = 0;
 
 	data->program_name = argv[0];
 	data->input_line = NULL;
@@ -70,35 +69,35 @@ void inicialize_data(data_of_program *data, int argc, char *argv[], char **env)
 	data->env = malloc(sizeof(char *) * 50);
 	if (env)
 	{
-		for (; env[i]; i++)
+		for (; env[x]; x++)
 		{
-			data->env[i] = str_duplicate(env[i]);
+			data->env[x] = str_duplicate(env[x]);
 		}
 	}
-	data->env[i] = NULL;
+	data->env[x] = NULL;
 	env = data->env;
 
 	data->alias_list = malloc(sizeof(char *) * 20);
-	for (i = 0; i < 20; i++)
+	for (x = 0; x < 20; x++)
 	{
-		data->alias_list[i] = NULL;
+		data->alias_list[x] = NULL;
 	}
 }
 /**
- * sisifo - its a infinite loop that shows the prompt
- * @prompt: prompt to be printed
- * @data: its a infinite loop that shows the prompt
+ * sisifo - the program shows the prompt
+ * @prompt: the prompt
+ * @data: stores the prompt
  */
 void sisifo(char *prompt, data_of_program *data)
 {
-	int error_code = 0, string_len = 0;
+	int string_len = 0, error_num = 0;
 
 	while (++(data->exec_counter))
 	{
 		_print(prompt);
-		error_code = string_len = _getline(data);
+		error_num = string_len = _getline(data);
 
-		if (error_code == EOF)
+		if (error_num == EOF)
 		{
 			free_all_data(data);
 			exit(errno); /* if EOF is the fisrt Char of string, exit*/
@@ -110,9 +109,9 @@ void sisifo(char *prompt, data_of_program *data)
 			tokenize(data);
 			if (data->tokens[0])
 			{ /* if a text is given to prompt, execute */
-				error_code = execute(data);
-				if (error_code != 0)
-					_print_error(error_code, data);
+				error_num = execute(data);
+				if (error_num != 0)
+					_print_error(error_num, data);
 			}
 			free_recurrent_data(data);
 		}

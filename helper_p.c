@@ -1,20 +1,19 @@
 #include "shell.h"
-
 /**
- * _print - writes a array of chars in the standar output
+ * _print - writes a array of chars to stdout
  * @string: pointer to the array of chars
- * Return: the number of bytes writed or .
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: the number of bytes
+ * On error, -1 is returned
  */
 int _print(char *string)
 {
 	return (write(STDOUT_FILENO, string, str_length(string)));
 }
 /**
- * _printe - writes a array of chars in the standar error
+ * _printe - writes a array of chars to stderr
  * @string: pointer to the array of chars
- * Return: the number of bytes writed or .
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: the number of bytes
+ * On error, -1 is returned
  */
 int _printe(char *string)
 {
@@ -22,23 +21,23 @@ int _printe(char *string)
 }
 
 /**
- * _print_error - writes a array of chars in the standart error
- * @data: a pointer to the program's data'
+ * _print_error - writes a array of chars to stderr
+ * @data: a pointer to the program's data
  * @errorcode: error code to print
- * Return: the number of bytes writed or .
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: the number of bytes
+ * On error, -1 is returned
  */
 int _print_error(int errorcode, data_of_program *data)
 {
-	char n_as_string[10] = {'\0'};
+	char letters[10] = {'\0'};
 
-	long_to_string((long) data->exec_counter, n_as_string, 10);
+	long_to_string((long) data->exec_counter, letters, 10);
 
 	if (errorcode == 2 || errorcode == 3)
 	{
 		_printe(data->program_name);
 		_printe(": ");
-		_printe(n_as_string);
+		_printe(letters);
 		_printe(": ");
 		_printe(data->tokens[0]);
 		if (errorcode == 2)
@@ -52,7 +51,7 @@ int _print_error(int errorcode, data_of_program *data)
 	{
 		_printe(data->program_name);
 		_printe(": ");
-		_printe(n_as_string);
+		_printe(letters);
 		_printe(": ");
 		_printe(data->command_name);
 		_printe(": not found\n");
@@ -61,7 +60,7 @@ int _print_error(int errorcode, data_of_program *data)
 	{
 		_printe(data->program_name);
 		_printe(": ");
-		_printe(n_as_string);
+		_printe(letters);
 		_printe(": ");
 		_printe(data->command_name);
 		_printe(": Permission denied\n");

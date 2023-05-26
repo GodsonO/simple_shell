@@ -1,13 +1,13 @@
 #include "shell.h"
 /**
  * _strtok - separates strings with delimiters
- * @line: It´s pointer to array we receive in getline.
- * @delim: It´s characters we mark off string in parts.
- * Return: A pointer to the created token
+ * @line: pointer to array we receive in getline
+ * @delim: characters to split string
+ * Return: A pointer to the token
 */
 char *_strtok(char *line, char *delim)
 {
-	int j;
+	int y;
 	static char *str;
 	char *copystr;
 
@@ -15,12 +15,12 @@ char *_strtok(char *line, char *delim)
 		str = line;
 	for (; *str != '\0'; str++)
 	{
-		for (j = 0; delim[j] != '\0'; j++)
+		for (y = 0; delim[y] != '\0'; y++)
 		{
-			if (*str == delim[j])
+			if (*str == delim[y])
 			break;
 		}
-		if (delim[j] == '\0')
+		if (delim[y] == '\0')
 			break;
 	}
 	copystr = str;
@@ -28,9 +28,9 @@ char *_strtok(char *line, char *delim)
 		return (NULL);
 	for (; *str != '\0'; str++)
 	{
-		for (j = 0; delim[j] != '\0'; j++)
+		for (y = 0; delim[y] != '\0'; y++)
 		{
-			if (*str == delim[j])
+			if (*str == delim[y])
 			{
 				*str = '\0';
 				str++;
